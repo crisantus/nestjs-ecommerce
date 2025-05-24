@@ -49,7 +49,7 @@ export const addItemToCart = async (req: AuthenticatedRequest, res: Response) =>
             },
         });
     }
-
+   
     // Send success response with the cart item
     res.status(200).json({
         status: true,
@@ -116,9 +116,9 @@ export const changeQuantity = async (req: AuthenticatedRequest, res: Response) =
     });
 };
 
-// ✅ Get all items in the user's cart
+// ✅ Get all items in the user's cart and return total amount first
 export const getCart = async (req: AuthenticatedRequest, res: Response) => {
-    // Fetch all cart items for the user and include product details
+    // Fetch all cart items for the user including product details
     const cartItems = await prismaClient.cartItem.findMany({
         where: {
             userId: req.user.id,
@@ -126,13 +126,22 @@ export const getCart = async (req: AuthenticatedRequest, res: Response) => {
         include: {
             product: true,
         },
-
     });
 
-    // Return cart data
+    // Calculate total sum of all items (quantity * product.price)
+    const cartTotal = cartItems.reduce((sum, item) => {
+        return sum + item.quantity * Number(item.product.price);
+    }, 0);
+
+    // Send response with cartTotal first
     res.status(200).json({
         status: true,
         message: "Cart retrieved successfully",
-        data: cartItems,
+        data: {
+            cartTotal, // 💰 Total amount for all cart items
+            items: cartItems, // List of items with product details
+        },
     });
 };
+
+

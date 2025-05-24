@@ -6,11 +6,11 @@ import { authenticateUser, authorizePermissions, Role } from '../middlewares/aut
 const productRoutes:Router = Router();
 
 productRoutes.post('/', [authenticateUser, authorizePermissions(Role.ADMIN)],AsyncErrorHandler(createProductController))
-productRoutes.get('/', [authenticateUser, authorizePermissions(Role.ADMIN)],AsyncErrorHandler(getAllProductsController))
-productRoutes.put('/:id', [authenticateUser, authorizePermissions(Role.ADMIN)],AsyncErrorHandler(updateProductController))
-productRoutes.delete('/:id', [authenticateUser, authorizePermissions(Role.ADMIN)],AsyncErrorHandler(deleteProductController)) 
-productRoutes.get('/:id', [authenticateUser, authorizePermissions(Role.ADMIN)],AsyncErrorHandler(getProductByIdController))
+productRoutes.get('/', [authenticateUser, authorizePermissions(Role.USER)],AsyncErrorHandler(getAllProductsController))
+productRoutes.put('/:id', [authenticateUser, authorizePermissions(Role.USER)],AsyncErrorHandler(updateProductController))
+productRoutes.delete('/:id', [authenticateUser, authorizePermissions(Role.USER)],AsyncErrorHandler(deleteProductController)) 
+productRoutes.get('/:id', [authenticateUser, authorizePermissions(Role.USER)],AsyncErrorHandler(getProductByIdController))
 // search?q=next
-productRoutes.get('/:id', [authenticateUser, authorizePermissions(Role.ADMIN)],AsyncErrorHandler(searchProductController))
+productRoutes.get('/:id', [authenticateUser, authorizePermissions(Role.USER)],AsyncErrorHandler(searchProductController))
 
 export default productRoutes;

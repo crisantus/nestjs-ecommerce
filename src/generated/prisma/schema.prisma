@@ -7,7 +7,6 @@
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
-  // previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -41,6 +40,7 @@ model User {
   addresses              Address[]
   cartItems              CartItem[]
   orders                 Order[]
+  payment                Payment[]
 
   @@map("users")
 }
@@ -128,4 +128,30 @@ model OrderEvent {
   updatedAt DateTime        @updatedAt
 
   @@map("order_events")
+}
+
+model Payment {
+  id        String @id @default(cuid()) // Good choice for uniqueness
+  userId    Int
+  email     String
+  amount    Int
+  status    String
+  reference String @unique
+
+  paymentOption   PaymentOption @relation(fields: [paymentOptionId], references: [id])
+  paymentOptionId Int           @default(1) // Default to e.g., Paystack unless otherwise selected
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PaymentOption {
+  id        Int       @id @default(autoincrement())
+  name      String
+  active    Boolean   @default(true)
+  payments  Payment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
