@@ -4,11 +4,11 @@ import { AuthenticatedRequest } from "../middlewares/authentication";
 import { prismaClient } from "..";
 import { NotFoundError } from "../errors";
 import * as CustomError from "../errors";
-import { paystack } from "../../services/paystack/paystack";
-import { PaystackInitResponse, PaystackVerifyResponse } from "../../services/paystack/paystack-type";
+import { paystack } from "../services/paystack/paystack";
+import { PaystackInitResponse, PaystackVerifyResponse } from "../services/paystack/paystack-type";
 import { BASE_URL } from "../secrets";
-import { generateTxRef, initiatePaymentService, verifyPaymentService } from "../../services/flutterwave/flutterwave";
-import { FlutterwaveVerificationResponse } from "../../services/flutterwave/flutterwave-type";
+import { generateTxRef, initiatePaymentService, verifyPaymentService } from "../services/flutterwave/flutterwave";
+import { FlutterwaveVerificationResponse } from "../services/flutterwave/flutterwave-type";
 
 
 export const getAllPaymentsController = async (req: Request, res: Response) => {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PAYSTACK_SECRET_KEY } from '../../src/secrets';
+import { PAYSTACK_SECRET_KEY } from '../../secrets';
 
 
 const PAYSTACK_BASE_URL = 'https://api.paystack.co';

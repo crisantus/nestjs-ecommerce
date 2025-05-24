@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FLW_SECRET_KEY, FLW_BASE_URL } from "../../src/secrets";
+import { FLW_SECRET_KEY, FLW_BASE_URL } from "../../secrets";
 import { AxiosResponse } from "axios";
 import { FlutterwaveVerificationResponse } from "./flutterwave-type";
 
